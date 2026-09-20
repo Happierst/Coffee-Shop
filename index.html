@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кофейня «Зерно» — уютное место в центре города</title>
+
+<meta name="description" content="Кофейня «Зерно» в центре Москвы — свежеобжаренный кофе, домашняя выпечка и уютная атмосфера.">
+<meta name="keywords" content="кофейня, кофе, Москва, капучино, десерты">
+
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+<meta property="og:title" content="Кофейня «Зерно»">
+<meta property="og:description" content="Уютное место с авторским кофе в центре города">
+<meta property="og:image" content="img/YourImage.png">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Навигация -->
+<nav class="nav">
+  <a href="#about">О нас</a>
+  <a href="#menu">Меню</a>
+  <a href="#gallery">Галерея</a>
+  <a href="#contacts">Контакты</a>
+</nav>
+
+<!-- Главный экран -->
+<header class="hero">
+  <h1>Кофейня «Зерно»</h1>
+  <p>Свежеобжаренный кофе, домашняя выпечка и атмосфера, в которую хочется возвращаться</p>
+  <a href="#menu" class="btn">Смотреть меню</a>
+</header>
+
+<!-- О нас -->
+<section id="about" class="fade-in">
+  <h2>О нас</h2>
+  <div class="about-grid">
+    <img src="img/YourImage.png" alt="Наша кофейня">
+    <div>
+      <p>Мы — маленькая семейная кофейня в центре города. С 2018 года варим кофе из зёрен собственной обжарки и печём десерты каждое утро.</p>
+      <p>У нас уютно: тёплый свет, мягкие диваны, книги на полках и аромат свежего кофе. Идеальное место для встреч, работы или тихого утра наедине с собой.</p>
+      <p>Каждую неделю мы пробуем новые сорта и рады угостить вас чем-то особенным.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Меню -->
+<section id="menu" class="fade-in">
+  <h2>Меню</h2>
+  <div class="menu-grid">
+    <div class="menu-card">
+      <img src="img/YourImage.png" alt="Эспрессо">
+      <div class="menu-card-body">
+        <h3>Эспрессо</h3>
+        <p>Классика на зёрнах арабики из Эфиопии</p>
+        <span class="price">150 ₽</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img src="img/YourImage.png" alt="Капучино">
+      <div class="menu-card-body">
+        <h3>Капучино</h3>
+        <p>Бархатное молоко и плотная пенка</p>
+        <span class="price">220 ₽</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img src="img/YourImage.png" alt="Латте">
+      <div class="menu-card-body">
+        <h3>Латте</h3>
+        <p>Мягкий вкус с нотками карамели</p>
+        <span class="price">240 ₽</span>
+      </div>
+    </div>
+    <div class="menu-card">
+      <img src="img/YourImage.png" alt="Чизкейк">
+      <div class="menu-card-body">
+        <h3>Чизкейк</h3>
+        <p>Нежный десерт с ягодным соусом</p>
+        <span class="price">280 ₽</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Галерея -->
+<section id="gallery" class="fade-in">
+  <h2>Галерея</h2>
+  <div class="gallery">
+    <img src="img/YourImage.png" alt="Интерьер">
+    <img src="img/YourImage.png" alt="Кофе">
+    <img src="img/YourImage.png" alt="Атмосфера">
+    <img src="img/YourImage.png" alt="Зерно">
+    <img src="img/YourImage.png" alt="Бариста">
+    <img src="img/YourImage.png" alt="Выпечка">
+  </div>
+</section>
+
+<!-- Контакты -->
+<section id="contacts" class="fade-in">
+  <h2>Контакты</h2>
+  <div class="contacts-grid">
+    <div>
+      <h3>Адрес</h3>
+      <p>ул. Кофейная, 12<br>Москва</p>
+    </div>
+    <div>
+      <h3>Часы работы</h3>
+      <p>Пн–Пт: 8:00 – 22:00<br>Сб–Вс: 9:00 – 23:00</p>
+    </div>
+    <div>
+      <h3>Телефон</h3>
+      <p><a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+    </div>
+    <div>
+      <h3>Соцсети</h3>
+      <p><a href="#">@zerno.coffee</a><br><a href="#">Telegram</a> / <a href="#">VK</a></p>
+    </div>
+  </div>
+
+  <div class="contacts-map">
+    <iframe
+      src="https://yandex.ru/map-widget/v1/?ll=37.617700%2C55.755800&z=15"
+      width="100%" height="320"
+      style="border:0;"
+      loading="lazy"
+      title="Как нас найти на карте">
+    </iframe>
+  </div>
+</section>
+
+<footer>
+  © 2025 Кофейня «Зерно». Все права защищены.
+</footer>
+
+<!-- Переключатель темы -->
+<button id="themeToggle" aria-label="Переключить тему" title="Переключить тему">🌙</button>
+
+<!-- Кнопка "Наверх" -->
+<button id="toTop" aria-label="Наверх">↑</button>
+
+<script src="js/script.js"></script>
+</body>
+</html>
