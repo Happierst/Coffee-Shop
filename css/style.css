@@ -177,6 +177,7 @@ section {
   border: none;
   cursor: pointer;
   transition: all var(--transition);
+  font-family: inherit;
 }
 
 .btn:hover {
@@ -204,7 +205,7 @@ section {
   font-size: 17px;
 }
 
-/* Меню — карточки */
+/* Меню */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -252,7 +253,14 @@ section {
   color: var(--accent);
 }
 
-/* ===== МОДАЛЬНОЕ ОКНО КАРТОЧКИ МЕНЮ ===== */
+.menu-more {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* ============================================================
+   Модальное окно карточки меню
+   ============================================================ */
 .menu-modal {
   position: fixed;
   top: 0;
@@ -274,7 +282,6 @@ section {
   visibility: visible;
 }
 
-/* Тёмный фон */
 .menu-modal-backdrop {
   position: absolute;
   top: 0;
@@ -285,7 +292,6 @@ section {
   cursor: pointer;
 }
 
-/* Сама карточка */
 .menu-modal-card {
   position: relative;
   z-index: 1;
@@ -308,7 +314,6 @@ section {
   opacity: 1;
 }
 
-/* Кнопка закрытия */
 .menu-modal-close {
   position: absolute;
   top: 14px;
@@ -321,7 +326,6 @@ section {
   color: #ffffff;
   font-size: 26px;
   line-height: 1;
-  font-weight: 400;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -336,7 +340,6 @@ section {
   transform: rotate(90deg);
 }
 
-/* Фото слева */
 .menu-modal-photo {
   flex: 0 0 45%;
   max-width: 45%;
@@ -351,7 +354,6 @@ section {
   display: block;
 }
 
-/* Текст справа */
 .menu-modal-body {
   flex: 1;
   padding: 40px 44px;
@@ -403,7 +405,6 @@ section {
   border-top: 1px solid #ecdfd0;
 }
 
-/* На мобильных модалка в столбик */
 @media (max-width: 700px) {
   .menu-modal-card {
     flex-direction: column;
@@ -425,12 +426,413 @@ section {
   }
 }
 
-/* Блокируем скролл body, пока модалка открыта */
 body.modal-open {
   overflow: hidden;
 }
 
-/* Галерея */
+/* ============================================================
+   Полное меню
+   ============================================================ */
+.full-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.full-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.full-menu-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(20, 12, 6, 0.8);
+  cursor: pointer;
+}
+
+.full-menu-panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 90vh;
+  background: var(--cream);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  transform: translateY(24px) scale(0.97);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.full-menu.open .full-menu-panel {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.full-menu-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(61, 40, 27, 0.9);
+  color: #ffffff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 10;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.full-menu-close:hover {
+  background: var(--accent);
+  transform: rotate(90deg);
+}
+
+.full-menu-header {
+  padding: 40px 40px 20px;
+  text-align: center;
+  flex: 0 0 auto;
+  border-bottom: 1px solid #ecdfd0;
+}
+
+.full-menu-header h2 {
+  margin-bottom: 8px;
+}
+
+.full-menu-header p {
+  font-size: 15px;
+  color: var(--brown-light);
+  margin: 0;
+}
+
+.full-menu-grid {
+  padding: 30px 40px 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+.full-menu-card {
+  background: #ffffff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.full-menu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.full-menu-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.full-menu-card-body {
+  padding: 14px 16px;
+}
+
+.full-menu-card-body h3 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.full-menu-card-body p {
+  font-size: 13px;
+  color: var(--brown-light);
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+
+.full-menu-card-body .price {
+  font-size: 17px;
+}
+
+.full-menu-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.full-menu-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.full-menu-grid::-webkit-scrollbar-thumb {
+  background: #d9c8b6;
+  border-radius: 4px;
+}
+
+.full-menu-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .full-menu-grid {
+    grid-template-columns: 1fr 1fr;
+    padding: 24px;
+  }
+  .full-menu-header {
+    padding: 30px 24px 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .full-menu-panel {
+    max-height: 92vh;
+  }
+
+  .full-menu-header {
+    padding: 20px 60px 14px 20px;
+    text-align: left;
+  }
+
+  .full-menu-header h2 {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .full-menu-header p {
+    font-size: 13px;
+  }
+
+  .full-menu-close {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .full-menu-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .full-menu-card {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border-radius: 12px;
+  }
+
+  .full-menu-card:hover {
+    transform: none;
+  }
+
+  .full-menu-card img {
+    width: 100px;
+    height: 100px;
+    flex: 0 0 100px;
+    object-fit: cover;
+    border-radius: 12px 0 0 12px;
+  }
+
+  .full-menu-card-body {
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .full-menu-card-body h3 {
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  .full-menu-card-body p {
+    font-size: 12px;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    color: var(--brown-light);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .full-menu-card-body .price {
+    font-size: 14px;
+  }
+}
+
+/* ============================================================
+   Лайтбокс галереи
+   ============================================================ */
+.lightbox {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(10, 6, 3, 0.92);
+  cursor: zoom-out;
+}
+
+.lightbox img {
+  position: relative;
+  z-index: 1;
+  max-width: 92vw;
+  max-height: 86vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transform: scale(0.95);
+  transition: transform 0.35s ease;
+}
+
+.lightbox.open img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 3;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.lightbox-close:hover {
+  background: var(--accent);
+  transform: rotate(90deg);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 36px;
+  line-height: 1;
+  font-family: Georgia, serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 6px 0;
+  z-index: 3;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.lightbox-nav:hover {
+  background: var(--accent);
+}
+
+.lightbox-prev {
+  left: 20px;
+}
+
+.lightbox-next {
+  right: 20px;
+}
+
+.lightbox-prev:hover {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.lightbox-next:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
+.lightbox.single .lightbox-nav {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .lightbox {
+    padding: 50px 10px;
+  }
+  .lightbox-nav {
+    width: 44px;
+    height: 44px;
+    font-size: 28px;
+  }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+  .lightbox-close {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    top: 12px;
+    right: 12px;
+  }
+}
+
+/* ============================================================
+   Галерея
+   ============================================================ */
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -443,6 +845,7 @@ body.modal-open {
   object-fit: cover;
   border-radius: 12px;
   transition: transform var(--transition), filter var(--transition);
+  cursor: zoom-in;
 }
 
 .gallery img:hover {
@@ -608,4 +1011,44 @@ footer {
     bottom: 20px;
     right: 20px;
   }
+}
+
+/* ============================================================
+   Контакты — ссылки мессенджеров и соцсетей
+   ============================================================ */
+
+/* Обычные ссылки (телефон, telegram, vk, instagram) */
+.contacts-grid a {
+  color: var(--cream-3);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: color var(--transition);
+}
+
+.contacts-grid a:hover {
+  color: var(--accent);
+}
+
+/* Кнопка WhatsApp — с обводкой */
+.contacts-messenger {
+  margin-top: 8px;
+}
+
+.contacts-messenger a {
+  display: inline-block;
+  padding: 5px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.contacts-messenger a:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
 }

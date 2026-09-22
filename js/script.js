@@ -3,7 +3,7 @@
    ============================================================ */
 document.addEventListener('DOMContentLoaded', function () {
 
-  /* ----- 1. Кастомный плавный скролл ----- */
+  /* ----- 1. Плавный скролл ----- */
   function smoothScrollTo(targetY, duration) {
     duration = duration || 900;
     var startY = window.pageYOffset;
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ----- 3. Плавный скролл по всем якорным ссылкам ----- */
+  /* ----- 3. Плавный скролл по якорным ссылкам ----- */
   var anchorLinks = document.querySelectorAll('a[href^="#"]');
   var HEADER_OFFSET = 90;
 
@@ -155,29 +155,140 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.remove('modal-open');
   }
 
-  // Клик по карточке — открыть модалку
   menuCards.forEach(function (card) {
     card.addEventListener('click', function () {
       openModal({
-        img:     card.getAttribute('data-img'),
-        title:   card.getAttribute('data-title'),
-        desc:    card.getAttribute('data-desc'),
-        recipe:  card.getAttribute('data-recipe'),
-        extra:   card.getAttribute('data-extra'),
-        price:   card.getAttribute('data-price')
+        img:    card.getAttribute('data-img'),
+        title:  card.getAttribute('data-title'),
+        desc:   card.getAttribute('data-desc'),
+        recipe: card.getAttribute('data-recipe'),
+        extra:  card.getAttribute('data-extra'),
+        price:  card.getAttribute('data-price')
       });
     });
   });
 
-  // Клик по фону или крестику — закрыть
-  modal.querySelectorAll('[data-modal-close]').forEach(function (el) {
-    el.addEventListener('click', closeModal);
-  });
+  if (modal) {
+    modal.querySelectorAll('[data-modal-close]').forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+  }
 
-  // Esc — закрыть
+  /* ----- 8. Полное меню ----- */
+  var fullMenu      = document.getElementById('fullMenu');
+  var openFullMenu  = document.getElementById('openFullMenu');
+  var fullMenuCards = document.querySelectorAll('.full-menu-card');
+
+  function openFullMenuFn() {
+    fullMenu.classList.add('open');
+    fullMenu.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeFullMenuFn() {
+    fullMenu.classList.remove('open');
+    fullMenu.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  if (openFullMenu && fullMenu) {
+    openFullMenu.addEventListener('click', openFullMenuFn);
+
+    fullMenu.querySelectorAll('[data-full-close]').forEach(function (el) {
+      el.addEventListener('click', closeFullMenuFn);
+    });
+
+    fullMenuCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        closeFullMenuFn();
+        setTimeout(function () {
+          openModal({
+            img:    card.getAttribute('data-img'),
+            title:  card.getAttribute('data-title'),
+            desc:   card.getAttribute('data-desc'),
+            recipe: card.getAttribute('data-recipe'),
+            extra:  card.getAttribute('data-extra'),
+            price:  card.getAttribute('data-price')
+          });
+        }, 250);
+      });
+    });
+  }
+
+  /* ----- 9. Лайтбокс галереи ----- */
+  var lightbox      = document.getElementById('lightbox');
+  var lightboxImg   = document.getElementById('lightboxImg');
+  var lightboxPrev  = document.getElementById('lightboxPrev');
+  var lightboxNext  = document.getElementById('lightboxNext');
+  var galleryImgs   = document.querySelectorAll('.gallery img[data-lightbox]');
+  var currentIndex  = 0;
+
+  function openLightbox(index) {
+    if (!galleryImgs.length) return;
+    currentIndex = index;
+    var img = galleryImgs[currentIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.toggle('single', galleryImgs.length < 2);
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  function showLightbox(direction) {
+    if (!galleryImgs.length) return;
+    currentIndex = (currentIndex + direction + galleryImgs.length) % galleryImgs.length;
+    var img = galleryImgs[currentIndex];
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+  }
+
+  if (lightbox && galleryImgs.length) {
+    galleryImgs.forEach(function (img, i) {
+      img.addEventListener('click', function () { openLightbox(i); });
+    });
+
+    lightbox.querySelectorAll('[data-lightbox-close]').forEach(function (el) {
+      el.addEventListener('click', closeLightbox);
+    });
+
+    if (lightboxPrev) lightboxPrev.addEventListener('click', function (e) {
+      e.stopPropagation();
+      showLightbox(-1);
+    });
+
+    if (lightboxNext) lightboxNext.addEventListener('click', function (e) {
+      e.stopPropagation();
+      showLightbox(1);
+    });
+  }
+
+  /* ----- 10. Клавиатура ----- */
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal.classList.contains('open')) {
-      closeModal();
+    if (e.key === 'Escape') {
+      if (lightbox && lightbox.classList.contains('open')) {
+        closeLightbox();
+        return;
+      }
+      if (fullMenu && fullMenu.classList.contains('open')) {
+        closeFullMenuFn();
+        return;
+      }
+      if (modal && modal.classList.contains('open')) {
+        closeModal();
+        return;
+      }
+    }
+
+    if (lightbox && lightbox.classList.contains('open')) {
+      if (e.key === 'ArrowLeft')  showLightbox(-1);
+      if (e.key === 'ArrowRight') showLightbox(1);
     }
   });
 

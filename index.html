@@ -121,40 +121,60 @@
     </div>
 
   </div>
+
+  <div class="menu-more">
+    <button type="button" class="btn" id="openFullMenu">Полное меню →</button>
+  </div>
 </section>
 
 <!-- Галерея -->
 <section id="gallery" class="fade-in">
   <h2>Галерея</h2>
   <div class="gallery">
-    <img src="img/YourImage.png" alt="Интерьер">
-    <img src="img/YourImage.png" alt="Кофе">
-    <img src="img/YourImage.png" alt="Атмосфера">
-    <img src="img/YourImage.png" alt="Зерно">
-    <img src="img/YourImage.png" alt="Бариста">
-    <img src="img/YourImage.png" alt="Выпечка">
+    <img src="img/gallery-facade.jpg" alt="Фасад кофейни вечером" data-lightbox>
+    <img src="img/gallery-interior.jpg" alt="Уютный интерьер" data-lightbox>
+    <img src="img/gallery-barista.jpg" alt="Наш бариста за работой" data-lightbox>
+    <img src="img/gallery-latte-art.jpg" alt="Латте-арт" data-lightbox>
+    <img src="img/gallery-pastry.jpg" alt="Свежая выпечка" data-lightbox>
+    <img src="img/gallery-beans.jpg" alt="Кофейные зёрна" data-lightbox>
   </div>
 </section>
 
 <!-- Контакты -->
 <section id="contacts" class="fade-in">
   <h2>Контакты</h2>
+
   <div class="contacts-grid">
     <div>
       <h3>Адрес</h3>
       <p>ул. Кофейная, 12<br>Москва</p>
     </div>
+
     <div>
       <h3>Часы работы</h3>
       <p>Пн–Пт: 8:00 – 22:00<br>Сб–Вс: 9:00 – 23:00</p>
     </div>
+
     <div>
       <h3>Телефон</h3>
-      <p><a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+      <p>
+        <a href="tel:+79991234567">+7 (999) 123-45-67</a>
+      </p>
+      <p class="contacts-messenger">
+        <a href="#" target="_blank" rel="noopener">WhatsApp</a>
+      </p>
     </div>
+
     <div>
       <h3>Соцсети</h3>
-      <p><a href="#">@zerno.coffee</a><br><a href="#">Telegram</a> / <a href="#">VK</a></p>
+      <p>
+        <a href="#" target="_blank" rel="noopener">Telegram</a>
+        /
+        <a href="#" target="_blank" rel="noopener">VK</a>
+      </p>
+      <p>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+      </p>
     </div>
   </div>
 
@@ -198,6 +218,182 @@
       <div class="menu-modal-price" id="modalPrice"></div>
     </div>
   </div>
+</div>
+
+<!-- Полное меню -->
+<div class="full-menu" id="fullMenu" aria-hidden="true">
+  <div class="full-menu-backdrop" data-full-close></div>
+  <div class="full-menu-panel" role="dialog" aria-modal="true">
+    <button class="full-menu-close" type="button" aria-label="Закрыть" data-full-close>×</button>
+
+    <div class="full-menu-header">
+      <h2>Полное меню</h2>
+      <p>Кофе, десерты и выпечка — всё, что у нас есть</p>
+    </div>
+
+    <div class="full-menu-grid">
+
+      <div class="full-menu-card"
+           data-title="Эспрессо"
+           data-desc="Классика на зёрнах арабики из Эфиопии"
+           data-recipe="18 г свежемолотой арабики, 30 мл воды. Пролив 25 секунд при 92 °C."
+           data-extra="Подача: в прогретой керамической чашке 60 мл."
+           data-price="150 ₽"
+           data-img="img/Espresso.jpg">
+        <img src="img/Espresso.jpg" alt="Эспрессо">
+        <div class="full-menu-card-body">
+          <h3>Эспрессо</h3>
+          <p>Классика на зёрнах арабики из Эфиопии</p>
+          <span class="price">150 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Капучино"
+           data-desc="Бархатное молоко и плотная пенка"
+           data-recipe="Двойной эспрессо (60 мл), 120 мл молока 3,2%, взбитого до плотной микропены."
+           data-extra="Подача: в чашке 180 мл, рисунок латте-арт."
+           data-price="220 ₽"
+           data-img="img/Cappuccino.jpg">
+        <img src="img/Cappuccino.jpg" alt="Капучино">
+        <div class="full-menu-card-body">
+          <h3>Капучино</h3>
+          <p>Бархатное молоко и плотная пенка</p>
+          <span class="price">220 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Латте"
+           data-desc="Мягкий вкус с нотками карамели"
+           data-recipe="Эспрессо (30 мл), 200 мл молока, 10 мл карамельного сиропа."
+           data-extra="Подача: в высоком стеклянном стакане 300 мл."
+           data-price="240 ₽"
+           data-img="img/Latte.jpg">
+        <img src="img/Latte.jpg" alt="Латте">
+        <div class="full-menu-card-body">
+          <h3>Латте</h3>
+          <p>Мягкий вкус с нотками карамели</p>
+          <span class="price">240 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Чизкейк"
+           data-desc="Нежный десерт с ягодным соусом"
+           data-recipe="Сливочный сыр, песочная основа, ваниль, ягодный соус (малина, черника, смородина)."
+           data-extra="Подача: ломтик 120 г, украшен свежими ягодами и мятой."
+           data-price="280 ₽"
+           data-img="img/Cheesecake.jpg">
+        <img src="img/Cheesecake.jpg" alt="Чизкейк">
+        <div class="full-menu-card-body">
+          <h3>Чизкейк</h3>
+          <p>Нежный десерт с ягодным соусом</p>
+          <span class="price">280 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Флэт уайт"
+           data-desc="Мягкий кофе с плотной микропеной"
+           data-recipe="Двойной эспрессо (60 мл), 100 мл молока, взбитого до плотной микропены без крупных пузырей."
+           data-extra="Подача: в чашке 160 мл, без латте-арта — только ровная белая точка."
+           data-price="240 ₽"
+           data-img="img/menu-flatwhite.jpg">
+        <img src="img/menu-flatwhite.jpg" alt="Флэт уайт">
+        <div class="full-menu-card-body">
+          <h3>Флэт уайт</h3>
+          <p>Мягкий кофе с плотной микропеной</p>
+          <span class="price">240 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Раф ванильный"
+           data-desc="Сливочный кофе с ванилью"
+           data-recipe="Эспрессо (30 мл), 150 мл сливок 11%, 20 мл ванильного сиропа, щепотка ванилина."
+           data-extra="Подача: в высоком стеклянном стакане 250 мл, украшен взбитыми сливками."
+           data-price="280 ₽"
+           data-img="img/menu-raf.jpg">
+        <img src="img/menu-raf.jpg" alt="Раф ванильный">
+        <div class="full-menu-card-body">
+          <h3>Раф ванильный</h3>
+          <p>Сливочный кофе с ванилью</p>
+          <span class="price">280 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Какао с маршмеллоу"
+           data-desc="Тёплое какао для тех, кто не пьёт кофе"
+           data-recipe="Молоко 3,2% (200 мл), какао-порошок, тёмный шоколад, сахар по вкусу, мини-маршмеллоу."
+           data-extra="Подача: в керамической кружке 250 мл, украшено шоколадной стружкой и корицей."
+           data-price="220 ₽"
+           data-img="img/menu-cocoa.jpg">
+        <img src="img/menu-cocoa.jpg" alt="Какао с маршмеллоу">
+        <div class="full-menu-card-body">
+          <h3>Какао с маршмеллоу</h3>
+          <p>Тёплое какао для тех, кто не пьёт кофе</p>
+          <span class="price">220 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Круассан с миндалём"
+           data-desc="Слоёный круассан с миндальным кремом"
+           data-recipe="Слоёное тесто, миндальный крем франжипан, лепестки миндаля, сахарная пудра."
+           data-extra="Подача: разогревается перед подачей, посыпается пудрой."
+           data-price="190 ₽"
+           data-img="img/menu-croissant.jpg">
+        <img src="img/menu-croissant.jpg" alt="Круассан с миндалём">
+        <div class="full-menu-card-body">
+          <h3>Круассан с миндалём</h3>
+          <p>Слоёный круассан с миндальным кремом</p>
+          <span class="price">190 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Тирамису"
+           data-desc="Классический итальянский десерт"
+           data-recipe="Маскарпоне, савоярди, эспрессо, какао, сахарная пудра, яичные желтки."
+           data-extra="Подача: порция 110 г в керамической формочке, посыпана какао."
+           data-price="320 ₽"
+           data-img="img/menu-tiramisu.jpg">
+        <img src="img/menu-tiramisu.jpg" alt="Тирамису">
+        <div class="full-menu-card-body">
+          <h3>Тирамису</h3>
+          <p>Классический итальянский десерт</p>
+          <span class="price">320 ₽</span>
+        </div>
+      </div>
+
+      <div class="full-menu-card"
+           data-title="Матча-латте"
+           data-desc="Японский зелёный чай с молоком"
+           data-recipe="Церемониальная матча (2 г), 200 мл молока, 10 мл сиропа агавы."
+           data-extra="Подача: в высоком стеклянном стакане 300 мл, слоями — матча сверху."
+           data-price="290 ₽"
+           data-img="img/menu-matcha.jpg">
+        <img src="img/menu-matcha.jpg" alt="Матча-латте">
+        <div class="full-menu-card-body">
+          <h3>Матча-латте</h3>
+          <p>Японский зелёный чай с молоком</p>
+          <span class="price">290 ₽</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Лайтбокс галереи -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox-backdrop" data-lightbox-close></div>
+  <button class="lightbox-close" type="button" aria-label="Закрыть" data-lightbox-close>×</button>
+  <button class="lightbox-nav lightbox-prev" type="button" aria-label="Назад" id="lightboxPrev">‹</button>
+  <button class="lightbox-nav lightbox-next" type="button" aria-label="Вперёд" id="lightboxNext">›</button>
+  <img src="" alt="" id="lightboxImg">
 </div>
 
 <script src="js/script.js"></script>
