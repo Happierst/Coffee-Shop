@@ -1,27 +1,84 @@
 /* ============================================================
-   Кофейня «Зерно» — основной скрипт
+   Кофейня Зерно - основной скрипт
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
 
-  /* ----- 1. Кнопка «Наверх» ----- */
-  const toTop = document.getElementById('toTop');
+  /* ----- 1. Кастомный плавный скролл ----- */
+  function smoothScrollTo(targetY, duration) {
+    duration = duration || 900;
+    var startY = window.pageYOffset;
+    var diff = targetY - startY;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (startTime === null) startTime = timestamp;
+      var elapsed = timestamp - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+
+      var eased = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      window.scrollTo(0, startY + diff * eased);
+
+      if (elapsed < duration) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ----- 2. Кнопка «Наверх» ----- */
+  var toTop = document.getElementById('toTop');
 
   if (toTop) {
-    window.addEventListener('scroll', () => {
-      toTop.classList.toggle('visible', window.scrollY > 500);
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 500) {
+        toTop.classList.add('visible');
+      } else {
+        toTop.classList.remove('visible');
+      }
     });
 
-    toTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    toTop.addEventListener('click', function () {
+      smoothScrollTo(0, 900);
     });
   }
 
-  /* ----- 2. Плавное появление секций при скролле ----- */
-  const fadeEls = document.querySelectorAll('.fade-in');
+  /* ----- 3. Плавный скролл по всем якорным ссылкам ----- */
+  var anchorLinks = document.querySelectorAll('a[href^="#"]');
+  var HEADER_OFFSET = 90;
+
+  for (var i = 0; i < anchorLinks.length; i++) {
+    (function (link) {
+      link.addEventListener('click', function (e) {
+        var href = link.getAttribute('href');
+        if (!href || href === '#') return;
+
+        var target = document.querySelector(href);
+        if (!target) return;
+
+        e.preventDefault();
+
+        var targetY = target.getBoundingClientRect().top
+                    + window.pageYOffset
+                    - HEADER_OFFSET;
+
+        smoothScrollTo(targetY, 900);
+
+        if (history.replaceState) {
+          history.replaceState(null, '', href);
+        }
+      });
+    })(anchorLinks[i]);
+  }
+
+  /* ----- 4. Плавное появление секций ----- */
+  var fadeEls = document.querySelectorAll('.fade-in');
 
   if ('IntersectionObserver' in window && fadeEls.length) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           observer.unobserve(entry.target);
@@ -29,23 +86,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.15 });
 
-    fadeEls.forEach(el => observer.observe(el));
+    fadeEls.forEach(function (el) { observer.observe(el); });
   } else {
-    // Fallback для старых браузеров
-    fadeEls.forEach(el => el.classList.add('visible'));
+    for (var j = 0; j < fadeEls.length; j++) {
+      fadeEls[j].classList.add('visible');
+    }
   }
 
-  /* ----- 3. Подсветка активного пункта меню при скролле ----- */
-  const navLinks = document.querySelectorAll('.nav a');
-  const sections = document.querySelectorAll('section[id], header[id]');
+  /* ----- 5. Подсветка активного пункта меню ----- */
+  var navLinks = document.querySelectorAll('.nav a');
+  var sections = document.querySelectorAll('section[id], header[id]');
 
   if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
-    const navObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          const id = entry.target.id;
-          navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          var id = entry.target.id;
+          navLinks.forEach(function (link) {
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
           });
         }
       });
@@ -54,58 +116,69 @@ document.addEventListener('DOMContentLoaded', () => {
       threshold: 0
     });
 
-    sections.forEach(sec => navObserver.observe(sec));
+    sections.forEach(function (sec) { navObserver.observe(sec); });
   }
 
-  /* ----- 4. Плавный скролл с учётом плавающего меню ----- */
-  navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      const targetId = link.getAttribute('href');
-      if (!targetId || !targetId.startsWith('#')) return;
+  /* ----- 6. Автообновление года ----- */
+  var footer = document.querySelector('footer');
+  if (footer) {
+    footer.innerHTML = footer.innerHTML.replace(/©\s*\d{4}/, '© ' + new Date().getFullYear());
+  }
 
-      const target = document.querySelector(targetId);
-      if (!target) return;
+  /* ----- 7. Модальное окно карточки меню ----- */
+  var modal        = document.getElementById('menuModal');
+  var modalImg     = document.getElementById('modalImg');
+  var modalTitle   = document.getElementById('modalTitle');
+  var modalDesc    = document.getElementById('modalDesc');
+  var modalRecipe  = document.getElementById('modalRecipe');
+  var modalExtra   = document.getElementById('modalExtra');
+  var modalPrice   = document.getElementById('modalPrice');
+  var menuCards    = document.querySelectorAll('.menu-card[data-menu]');
 
-      e.preventDefault();
-      const offset = 90; // высота плавающего меню + отступ
-      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+  function openModal(data) {
+    modalImg.src        = data.img;
+    modalImg.alt        = data.title;
+    modalTitle.textContent   = data.title;
+    modalDesc.textContent    = data.desc;
+    modalRecipe.textContent  = data.recipe;
+    modalExtra.textContent   = data.extra;
+    modalPrice.textContent   = data.price;
 
-      window.scrollTo({ top, behavior: 'smooth' });
-      history.replaceState(null, '', targetId);
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  // Клик по карточке — открыть модалку
+  menuCards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      openModal({
+        img:     card.getAttribute('data-img'),
+        title:   card.getAttribute('data-title'),
+        desc:    card.getAttribute('data-desc'),
+        recipe:  card.getAttribute('data-recipe'),
+        extra:   card.getAttribute('data-extra'),
+        price:   card.getAttribute('data-price')
+      });
     });
   });
 
-  /* ----- 5. Мелкая приятность: текущий год в подвале ----- */
-  const footer = document.querySelector('footer');
-  if (footer) {
-    footer.innerHTML = footer.innerHTML.replace(/©\s*\d{4}/, `© ${new Date().getFullYear()}`);
-  }
+  // Клик по фону или крестику — закрыть
+  modal.querySelectorAll('[data-modal-close]').forEach(function (el) {
+    el.addEventListener('click', closeModal);
+  });
 
-    /* ----- 6. Переключатель тёмной темы ----- */
-  const themeBtn = document.getElementById('themeToggle');
-  const root = document.documentElement;
-  const STORAGE_KEY = 'zerno-theme';
+  // Esc — закрыть
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('open')) {
+      closeModal();
+    }
+  });
 
-  // Восстанавливаем сохранённую тему при загрузке
-  const savedTheme = localStorage.getItem(STORAGE_KEY);
-  if (savedTheme === 'dark') {
-    root.setAttribute('data-theme', 'dark');
-    if (themeBtn) themeBtn.textContent = '☀️';
-  }
-
-  // Переключение по клику
-  if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-      const isDark = root.getAttribute('data-theme') === 'dark';
-      if (isDark) {
-        root.removeAttribute('data-theme');
-        themeBtn.textContent = '🌙';
-        localStorage.setItem(STORAGE_KEY, 'light');
-      } else {
-        root.setAttribute('data-theme', 'dark');
-        themeBtn.textContent = '☀️';
-        localStorage.setItem(STORAGE_KEY, 'dark');
-      }
-    });
-  }
 });

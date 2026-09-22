@@ -55,38 +55,71 @@
 <section id="menu" class="fade-in">
   <h2>Меню</h2>
   <div class="menu-grid">
-    <div class="menu-card">
-      <img src="img/YourImage.png" alt="Эспрессо">
+
+    <div class="menu-card"
+         data-menu
+         data-title="Эспрессо"
+         data-desc="Классика на зёрнах арабики из Эфиопии"
+         data-recipe="18 г свежемолотой арабики, 30 мл воды. Пролив 25 секунд при 92 °C."
+         data-extra="Подача: в прогретой керамической чашке 60 мл."
+         data-price="150 ₽"
+         data-img="img/Espresso.jpg">
+      <img src="img/Espresso.jpg" alt="Эспрессо">
       <div class="menu-card-body">
         <h3>Эспрессо</h3>
         <p>Классика на зёрнах арабики из Эфиопии</p>
         <span class="price">150 ₽</span>
       </div>
     </div>
-    <div class="menu-card">
-      <img src="img/YourImage.png" alt="Капучино">
+
+    <div class="menu-card"
+         data-menu
+         data-title="Капучино"
+         data-desc="Бархатное молоко и плотная пенка"
+         data-recipe="Двойной эспрессо (60 мл), 120 мл молока 3,2%, взбитого до плотной микропены."
+         data-extra="Подача: в чашке 180 мл, рисунок латте-арт."
+         data-price="220 ₽"
+         data-img="img/Cappuccino.jpg">
+      <img src="img/Cappuccino.jpg" alt="Капучино">
       <div class="menu-card-body">
         <h3>Капучино</h3>
         <p>Бархатное молоко и плотная пенка</p>
         <span class="price">220 ₽</span>
       </div>
     </div>
-    <div class="menu-card">
-      <img src="img/YourImage.png" alt="Латте">
+
+    <div class="menu-card"
+         data-menu
+         data-title="Латте"
+         data-desc="Мягкий вкус с нотками карамели"
+         data-recipe="Эспрессо (30 мл), 200 мл молока, 10 мл карамельного сиропа."
+         data-extra="Подача: в высоком стеклянном стакане 300 мл."
+         data-price="240 ₽"
+         data-img="img/Latte.jpg">
+      <img src="img/Latte.jpg" alt="Латте">
       <div class="menu-card-body">
         <h3>Латте</h3>
         <p>Мягкий вкус с нотками карамели</p>
         <span class="price">240 ₽</span>
       </div>
     </div>
-    <div class="menu-card">
-      <img src="img/YourImage.png" alt="Чизкейк">
+
+    <div class="menu-card"
+         data-menu
+         data-title="Чизкейк"
+         data-desc="Нежный десерт с ягодным соусом"
+         data-recipe="Сливочный сыр, песочная основа, ваниль, ягодный соус (малина, черника, смородина)."
+         data-extra="Подача: ломтик 120 г, украшен свежими ягодами и мятой."
+         data-price="280 ₽"
+         data-img="img/Cheesecake.jpg">
+      <img src="img/Cheesecake.jpg" alt="Чизкейк">
       <div class="menu-card-body">
         <h3>Чизкейк</h3>
         <p>Нежный десерт с ягодным соусом</p>
         <span class="price">280 ₽</span>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -140,11 +173,32 @@
   © 2025 Кофейня «Зерно». Все права защищены.
 </footer>
 
-<!-- Переключатель темы -->
-<button id="themeToggle" aria-label="Переключить тему" title="Переключить тему">🌙</button>
-
 <!-- Кнопка "Наверх" -->
 <button id="toTop" aria-label="Наверх">↑</button>
+
+<!-- Модальное окно карточки меню -->
+<div class="menu-modal" id="menuModal" aria-hidden="true">
+  <div class="menu-modal-backdrop" data-modal-close></div>
+  <div class="menu-modal-card" role="dialog" aria-modal="true">
+    <button class="menu-modal-close" type="button" aria-label="Закрыть" data-modal-close>×</button>
+    <div class="menu-modal-photo">
+      <img src="" alt="" id="modalImg">
+    </div>
+    <div class="menu-modal-body">
+      <h3 id="modalTitle"></h3>
+      <p class="menu-modal-desc" id="modalDesc"></p>
+      <div class="menu-modal-block">
+        <span class="menu-modal-label">Состав</span>
+        <p id="modalRecipe"></p>
+      </div>
+      <div class="menu-modal-block">
+        <span class="menu-modal-label">Подача</span>
+        <p id="modalExtra"></p>
+      </div>
+      <div class="menu-modal-price" id="modalPrice"></div>
+    </div>
+  </div>
+</div>
 
 <script src="js/script.js"></script>
 </body>
