@@ -1052,3 +1052,35 @@ footer {
   color: #ffffff;
   border-color: var(--accent);
 }
+
+/* ============================================================
+   Иконка-крестик для всех кнопок закрытия
+   ============================================================ */
+.menu-modal-close svg,
+.full-menu-close svg,
+.lightbox-close svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+/* Размер иконки для каждой кнопки */
+.full-menu-close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.lightbox-close svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Убираем старые font-size — они больше не нужны */
+.menu-modal-close,
+.full-menu-close,
+.lightbox-close {
+  font-size: 0;
+  padding: 0;
+  line-height: 0;
+}
