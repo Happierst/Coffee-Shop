@@ -96,28 +96,78 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ----- 5. Подсветка активного пункта меню ----- */
   var navLinks = document.querySelectorAll('.nav a');
   var sections = document.querySelectorAll('section[id], header[id]');
+  var scrollLock = false;   // блокировка, пока идёт плавный скролл
+  var lockTimer  = null;
 
-  if (navLinks.length && sections.length && 'IntersectionObserver' in window) {
-    var navObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.id;
-          navLinks.forEach(function (link) {
-            if (link.getAttribute('href') === '#' + id) {
-              link.classList.add('active');
-            } else {
-              link.classList.remove('active');
-            }
-          });
-        }
-      });
-    }, {
-      rootMargin: '-45% 0px -45% 0px',
-      threshold: 0
+  function setActiveLink(id) {
+    navLinks.forEach(function (link) {
+      if (link.getAttribute('href') === '#' + id) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
     });
-
-    sections.forEach(function (sec) { navObserver.observe(sec); });
   }
+
+  function updateActiveSection() {
+    if (scrollLock) return;
+    if (!sections.length) return;
+
+    // Точка отсчёта — 120px от верха экрана (под плавающим меню)
+    var refPoint = 120;
+    var closest = null;
+    var closestDist = Infinity;
+
+    for (var i = 0; i < sections.length; i++) {
+      var rect = sections[i].getBoundingClientRect();
+      // Расстояние от верха секции до точки отсчёта
+      var dist = Math.abs(rect.top - refPoint);
+
+      // Секция, которая сейчас проходит через точку отсчёта — приоритет
+      if (rect.top <= refPoint && rect.bottom > refPoint) {
+        closest = sections[i];
+        break;
+      }
+
+      // Иначе берём ближайшую по расстоянию
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = sections[i];
+      }
+    }
+
+    if (closest && closest.id) {
+      setActiveLink(closest.id);
+    }
+  }
+
+  // Слушаем скролл вместо IntersectionObserver — надёжнее на мобилке
+  if (navLinks.length && sections.length) {
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    updateActiveSection(); // при загрузке
+  }
+
+  // Пока идёт программный скролл — держим активной нажатую ссылку
+  navLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      var href = link.getAttribute('href');
+      if (!href || href.charAt(0) !== '#') return;
+
+      var id = href.slice(1);
+      if (!id) return;
+
+      // Сразу подсвечиваем нажатую ссылку
+      setActiveLink(id);
+
+      // Блокируем observer на время скролла (900 мс + запас)
+      scrollLock = true;
+      clearTimeout(lockTimer);
+      lockTimer = setTimeout(function () {
+        scrollLock = false;
+        updateActiveSection();
+      }, 1100);
+    });
+  });
 
   /* ----- 6. Автообновление года ----- */
   var footer = document.querySelector('footer');
